@@ -22,14 +22,22 @@ for file in ${dotfile[@]}; do
     ln -s src/$file $HOME/
 done
 
-for t in "source" "bin"; do
-    for file in ${$t[@]}; do
-        [[ $t ]] || mkdir $t
-        if [[ ${file#*.} == "src" ]]; then
-            bash $t/$file
-            mv src/${file%.*} $t/
-        else
-            ln -s src/$file $t/
-        fi
-    done
+for file in ${source[@]}; do
+    [[ -e "source/" ]] || mkdir source/
+    if [[ ${file#*.} == "src" ]]; then
+        bash src/$file
+        mv src/${file%.*} source/
+    else
+        ln -s src/$file source/
+    fi
+done
+
+for file in ${bin[@]}; do
+    [[ -e "bin/" ]] || mkdir bin/
+    if [[ ${file#*.} == "src" ]]; then
+        bash src/$file
+        mv src/${file%.*} bin/
+    else
+        ln -s src/$file bin/
+    fi
 done
