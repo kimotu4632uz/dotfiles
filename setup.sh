@@ -16,8 +16,7 @@ bin=(
 
 export MYENV=${MYENV:-$HOME/.myenv}
 git clone https://github.com/kimotu4632uz/myenv.git $MYENV
-cd $MYEMV
-echo $PWD
+cd $MYENV
 
 for file in ${dotfile[@]}; do
     ln -s $MYENV/src/$file $HOME/
