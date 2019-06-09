@@ -1,18 +1,18 @@
 #!/bin/bash
-dotfile=[
-    ".bash_profile",
+dotfile=(
+    ".bash_profile"
     ".bashrc"
-]
+)
 
-source=[
-    "utils.sh",
-    "git-prompt.sh.src",
+source=(
+    "utils.sh"
+    "git-prompt.sh.src"
     "bashmarks.sh.src"
-]
+)
 
-bin=[
+bin=(
     "24-bit-color.sh.src"
-]
+)
 
 export MYENV=${MYENV:-$HOME/.myenv}
 git clone https://github.com/kimotu4632uz/myenv.git $MYENV
