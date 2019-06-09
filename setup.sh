@@ -17,9 +17,10 @@ bin=(
 export MYENV=${MYENV:-$HOME/.myenv}
 git clone https://github.com/kimotu4632uz/myenv.git $MYENV
 cd $MYEMV
+echo $PWD
 
 for file in ${dotfile[@]}; do
-    ln -s src/$file $HOME/
+    ln -s $MYENV/src/$file $HOME/
 done
 
 for file in ${source[@]}; do
@@ -28,7 +29,7 @@ for file in ${source[@]}; do
         bash src/$file
         mv src/${file%.*} source/
     else
-        ln -s src/$file source/
+        ln -s ../src/$file source/
     fi
 done
 
@@ -38,6 +39,6 @@ for file in ${bin[@]}; do
         bash src/$file
         mv src/${file%.*} bin/
     else
-        ln -s src/$file bin/
+        ln -s ../src/$file bin/
     fi
 done
