@@ -24,7 +24,7 @@ done
 
 for file in ${source[@]}; do
     [[ -e "source/" ]] || mkdir source/
-    if [[ ${file#*.} == "src" ]]; then
+    if [[ ${file##*.} == "src" ]]; then
         bash src/$file
         mv src/${file%.*} source/
     else
@@ -34,7 +34,7 @@ done
 
 for file in ${bin[@]}; do
     [[ -e "bin/" ]] || mkdir bin/
-    if [[ ${file#*.} == "src" ]]; then
+    if [[ ${file##*.} == "src" ]]; then
         bash src/$file
         mv src/${file%.*} bin/
     else
