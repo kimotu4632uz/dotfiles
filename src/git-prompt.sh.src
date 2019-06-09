@@ -1,2 +1,2 @@
 curl -O https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-patch git-prompt.sh.patch > git-prompt.sh
+patch -u git-prompt.sh < git-prompt.sh.patch
