@@ -2,6 +2,7 @@
 dotfile=(
     ".bash_profile"
     ".bashrc"
+    ".vimrc"
 )
 
 source=(
