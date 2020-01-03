@@ -1,0 +1,2 @@
+url="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh"
+patch="git-prompt.sh.patch"

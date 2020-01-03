@@ -1,7 +1,7 @@
 export MYENV=${MYENV:-$HOME/.myenv}
 
-while read line; do
-    source $line
+while read file; do
+    source "$file"
 done < <(find $MYENV/source -name "*.sh")
 
 export PATH=$PATH:$MYENV/bin

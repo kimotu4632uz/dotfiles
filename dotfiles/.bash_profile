@@ -17,12 +17,3 @@ export LESS_TERMCAP_so=$'\E[00;47;30m'   # Begins standout-mode.
 export LESS_TERMCAP_ue=$'\E[0m'          # Ends underline.
 export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
 
-export PYTHONPATH="$HOME/pylib"
-
-export USE_CCACHE=1
-export CCACHE_DIR=$HOME/.ccache
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$PREFIX/lib64"
-
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-

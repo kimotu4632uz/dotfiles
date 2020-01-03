@@ -1,44 +1,18 @@
 #!/bin/bash
-dotfile=(
-    ".bash_profile"
-    ".bashrc"
-    ".vimrc"
-)
-
-source=(
-    "utils.sh"
-    "git-prompt.sh.src"
-    "bashmarks.sh.src"
-)
-
-bin=(
-    "24-bit-color.sh.src"
-)
-
 export MYENV=${MYENV:-$HOME/.myenv}
 git clone https://github.com/kimotu4632uz/myenv.git $MYENV
-cd $MYENV
 
-for file in ${dotfile[@]}; do
-    ln -s $MYENV/src/$file $HOME/
-done
+while read file; do
+  ln -s "$file" $HOME/"${file##*/}"
+done < <(find $MYENV/dotfiles -maxdepth 1 -type f)
 
-for file in ${source[@]}; do
-    [[ -e "source/" ]] || mkdir source/
-    if [[ ${file##*.} == "src" ]]; then
-        (cd src && bash $file)
-        mv src/${file%.*} source/
-    else
-        ln -s ../src/$file source/
-    fi
-done
+while read file; do
+  (
+  source "$file"
+  curl -o "${file%.*}" "$url"
 
-for file in ${bin[@]}; do
-    [[ -e "bin/" ]] || mkdir bin/
-    if [[ ${file##*.} == "src" ]]; then
-        (cd src && bash $file)
-        mv src/${file%.*} bin/
-    else
-        ln -s ../src/$file bin/
-    fi
-done
+  if [[ "$patch" != "" ]]; then
+    patch -u "${file%.*}" < "${file%/*}/$patch"
+  fi
+  )
+done < <(find $MYENV/{source,bin} -maxdepth 1 -type f -name "*.src")

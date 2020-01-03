@@ -1,5 +1,6 @@
 source $HOME/.myenv/init.sh
 shopt -s autocd extglob globstar direxpand
+
 ## alias
 alias L='| less'
 alias G='| grep'
@@ -9,6 +10,15 @@ alias ll='ls -AlFh'
 alias grep='grep --color'
 alias mkdir='mkdir -p'
 
+alias CRLF2LF="sed -i -e 's/\r//g' "
+alias LF2CRLF="sed -i -e 's/$/\r/' "
+
+alias tab2space="expand -t 4"
+alias space2tab="unexpand -t 4"
+
+alias diff_up="diff -up"
+alias diff_dir="diff -uprN"
+
 # define custom prompt
 if type_q __git_ps1; then
     [[ $(id -u) = 0 ]] && ROOT_CHECK='# '
@@ -17,23 +27,5 @@ if type_q __git_ps1; then
     GIT_PS1_SHOWUPSTREAM="auto"
 else
     echo "please install bash-completion and git"
-fi
-
-
-## start tmux when terminal started
-# change session by "prefix -> (" or "prefix -> )"
-
-if type_q tmux; then
-    TMUX_INITIAL_SESSIONS=("main" "sub")
-
-    # if initial sessions doesn't exsist, start them
-    for tmux_session in ${TMUX_INITIAL_SESSIONS[@]}; do
-        if ! $(tmux has-session -t $tmux_session &> /dev/null); then
-            tmux new-session -d -s $tmux_session
-        fi
-    done
-
-    # if tmux doesn't run, "tmux attach"
-    [ "$TMUX" ] || tmux attach-session -t "${TMUX_INITIAL_SESSIONS[0]}"
 fi
 
