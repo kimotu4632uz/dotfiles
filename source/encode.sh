@@ -1,56 +1,39 @@
-#!/bin/bash
+#!/bin/bash -en
 
-flac2tag() {
-  for key in "album" "date" "genre"; do
-    metaflac --show-tag="$key" "$1" | sed -E 's/([^=]*)=(.*)/\L\1="\2"/'
-  done
+echo "enter metadata"
+read -p "album: " album
+read -p "artist: " artist
+read -p "date: " date
+read -p "genre: " genre
+read -p "number of track: " num
 
-  printf "tracks=("
-  metaflac --show-tag=title "$@" | sed -E 's/.*\:(title|TITLE)=(.*)/"\2"/' | tr '\n' ' '
-  printf ")\n"
+tracks=(); artists=()
 
-  artists=$(metaflac --show-tag=artist "$@" | sed -E 's/.*\:(artist|ARTIST)=(.*)/"\2"/')
+for i in $(seq $num); do
+  read -p "track $i title: " title; tracks+=("$title")
 
-  if [[ $(echo "$artists" | uniq | wc -l) == 1 ]]; then
-    echo "artist=$(head -n 1 <<< $artists)"
+  if [[ "$artist" == "" ]]; then
+    read -p "track $i artist: " artist_tmp; artists+=("$artist_tmp")
   else
-    echo "artists=($(tr '\n' ' ' <<< $artists))"
+    artists+=("$artist")
   fi
+done
 
-  if [[ ! -f cover.jpeg ]]; then
-    metaflac --export-picture-to=cover.jpeg "$1"
-  fi
-}
 
-encode() {
-  if [[ $# == 1 ]]; then
-    source "$1"
-  else
-    echo "enter metadata"
-    read -p "album: " album
-    read -p "artist: " artist
-    read -p "date: " date
-    read -p "genre: " genre
-    read -p "number of track: " num
+tmpdir=$(mktemp -d)
+pwd="$PWD"
+cd $tmpdir
+cdparanoia -B
 
-    tracks=(); artists=()
+id=$(cd-discid /dev/cdrom | awk '{print $1}')
 
-    for i in $(seq $num); do
-      read -p "track $i title: " title; tracks+=("$title")
+for i in ${!tracks[@]}; do
+  iz=$(printf "%2d" $i)
+  [[ ! -e track${iz}.cdda.wav ]] && break
 
-      if [[ "$artist" == "" ]]; then
-        read -p "track $i artist: " artist_tmp; artists+=("$artist_tmp")
-      fi
-    done
-  fi
+  flac -f -8 --picture $pwd/cover.jpeg -T title="${tracks[i]}" -T artist="${artists[i]}" -T album="$album" -T date="$date" -T genre="$genre" -T tracknumber=$((i + 1)) -o $pwd/${id}_${iz}.flac track${iz}.cdda.wav
+  opusenc --bitrate 160 --picture $pwd/cover.jpeg --title "${tracks[i]}" --artist "${artists[i]}" --album "$album" --date "$date" --genre "$genre" --tracknumber $((i + 1)) track${iz}.cdda.wav $pwd/${id}_${iz}.opus
+done
 
-  i=0; while read line; do
-    artist=${artists[i]:=$artist}
-
-    flac -f -8 --picture cover.jpeg -T title="${tracks[i]}" -T artist="$artist" -T album="$album" -T date="$date" -T genre="$genre" -T tracknumber=$i "$line"
-    opusenc --bitrate 240 --picture cover.jpeg --title "${tracks[i]}" --artist "$artist" --album "$album" --date "$date" --genre "$genre" --tracknumber $i "$line" "${line%.*}.opus"
-    #lame -b 320 --ti cover.jpeg --tt "${tracks[i]}" --ta "$artist" --tl "$album" --ty "$date" --tg "$genre" --tn $i --id3v2-only --id3v2-utf16 "$line"
-    let i++
-  done < <(find . -maxdepth 1 -name "*.wav" | sort)
-}
+rm -rf $tmpdir
 
