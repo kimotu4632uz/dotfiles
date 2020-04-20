@@ -1,3 +1,4 @@
+source $HOME/.bash_profile
 source $HOME/.myenv/init.sh
 shopt -s autocd extglob globstar direxpand
 
@@ -9,6 +10,7 @@ alias la='ls -AFh'
 alias ll='ls -AlFh'
 alias grep='grep --color'
 alias mkdir='mkdir -p'
+alias vi='vim'
 
 alias CRLF2LF="sed -i -e 's/\r//g' "
 alias LF2CRLF="sed -i -e 's/$/\r/' "
