@@ -31,3 +31,18 @@ else
     echo "please install bash-completion and git"
 fi
 
+#WSL only setting
+if type_q cmd.exe; then
+    $MYENV/bin/gpg-agent-relay.sh &
+    $MYENV/bin/ssh-agent-relay.sh &
+#    ss -a | grep -q $SSH_AUTH_SOCK || {
+#        rm -f $SSH_AUTH_SOCK
+#        ( setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"/mnt/c/Users/kimot/Programs/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork & )
+#    }
+#    ss -a | grep -q $GPG_SSH_AGENT || {
+#        rm -f $GPG_SSH_AGENT
+#        ( setsid socat UNIX-LISTEN:$GPG_SSH_AGENT,fork EXEC:"${NPIPERELAY} -ei -ep -s -a '${WIN_GPG}/S.gpg-agent.ssh'",nofork & )
+#        export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+#    }
+fi
+
