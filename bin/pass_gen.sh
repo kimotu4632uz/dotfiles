@@ -2,8 +2,8 @@
 
 while getopts 'anl:s:h' OPT; do
   case $OPT in
-    a) alonly=true ;;
-    n) numonly=true ;;
+    a) alonly=1 ;;
+    n) numonly=1 ;;
     l) length=$OPTARG ;;
     s) set=$OPTARG ;;
     h) echo "Usage: pass_gen [-a] [-n] [-s string_set] [-l length]"; exit 0 ;;
@@ -11,13 +11,13 @@ while getopts 'anl:s:h' OPT; do
   esac
 done
 
-alonly="${alonly:-false}"
-numonly="${numonly:-false}"
 length="${length:-10}"
 
-if "$alonly"; then
+if ((alonly && numonly)); then
+  cat /dev/urandom | tr -dc '[:alnum:]' | fold -w $length | head -1
+elif (( alonly )); then
   cat /dev/urandom | tr -dc '[:alpha:]' | fold -w $length | head -1
-elif "$numonly"; then
+elif (( numonly )); then
   cat /dev/urandom | tr -dc '[:digit:]' | fold -w $length | head -1
 elif [ "$set" != "" ]; then
   cat /dev/urandom | tr -dc "$set" | fold -w $length | head -1
