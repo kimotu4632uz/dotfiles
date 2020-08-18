@@ -4,4 +4,4 @@ while read file; do
     source "$file"
 done < <(find $MYENV/source -name "*.sh")
 
-export PATH=$PATH:$MYENV/bin
+export PATH=$PATH:$MYENV/bin:$MYENV/bin/3rdparty
