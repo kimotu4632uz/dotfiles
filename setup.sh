@@ -23,7 +23,7 @@ while read file; do
     patch -u "${file%.*}" < "${file%/*}/$patch"
   fi
 
-  mv "${file%.*}" $(echo "${file%.*}" | sed -E 's/^(.*)\/(.*)\.(.*)$/\1\/3rdparty\/\2/')
+  mv "${file%.*}" $(echo "$file" | sed -E 's/^(.*)\/(.*)\.(.*)$/\1\/3rdparty\/\2/')
   )
 done < <(find $MYENV/{source,bin} -maxdepth 1 -type f -name "*.src")
 
