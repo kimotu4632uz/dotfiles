@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
 GPG_AGENT=$HOME/.gnupg/S.gpg-agent
-WIN_GPG="C:/Users/kimot/AppData/Roaming/gnupg"
-NPIPERELAY="/mnt/c/Users/kimot/Programs/npiperelay.exe"
+WIN_GPG="C:/Users/${USERPROFILE##*/}/AppData/Roaming/gnupg"
+NPIPERELAY="$USERPROFILE/Programs/npiperelay.exe"
 PIDSTORE="$HOME/.gpg-agent-relay.pid"
 
 trap "echo '' > $PIDSTORE; exit 1" 1 2 3 15

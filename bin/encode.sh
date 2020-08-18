@@ -23,7 +23,7 @@ done
 tmpdir=$(mktemp -d)
 cd $tmpdir
 
-/mnt/c/Users/kimot/Programs/cdrtools/win32/cdda2wav.exe -B
+"$USERPROFILE"/Programs/cdrtools/win32/cdda2wav.exe -B
 id=$(cat audio_01.inf | grep CDDB_DISCID | awk '{print $2}' | sed -E 's/0x(.{8})\r/\U\1/')
 
 if [[ "$picture" == "" ]]; then
@@ -40,7 +40,7 @@ for i in ${!tracks[@]}; do
 done
 
 cd $HOME
-mv $tmpdir/*.flac /mnt/c/Users/kimot/Music/Music
-mv $tmpdir/*.opus /mnt/c/Users/kimot/Music/Music
+mv $tmpdir/*.flac "$USERPROFILE"/Music/Music
+mv $tmpdir/*.opus "$USERPROFILE"/Music/Music
 rm -rf $tmpdir
 
