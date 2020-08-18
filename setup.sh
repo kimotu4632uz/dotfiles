@@ -20,7 +20,7 @@ while read file; do
   curl -o "${file%.*}" "$url"
 
   if [[ "$patch" != "" ]]; then
-    patch -u "${file%.*}" < "${file%/*}/$patch"
+    patch --backup-if-mismatch -u "${file%.*}" < "${file%/*}/$patch"
   fi
 
   mv "${file%.*}" $(echo "$file" | sed -E 's/^(.*)\/(.*)\.(.*)$/\1\/3rdparty\/\2/')
