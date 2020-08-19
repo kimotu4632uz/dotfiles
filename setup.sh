@@ -1,6 +1,6 @@
 #!/bin/bash
 export MYENV=${MYENV:-$HOME/.myenv}
-git clone https://github.com/kimotu4632uz/myenv.git $MYENV
+git clone git@github.com:kimotu4632uz/myenv.git $MYENV
 
 while read file; do
   ln -s "$file" $HOME/"${file##*/}"
