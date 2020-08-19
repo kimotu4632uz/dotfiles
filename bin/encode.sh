@@ -12,7 +12,7 @@ readarray -t tracks < <(jq -r '.tracks[].album' "$1")
 if [[ "${meta['artist']}" == "" ]]; then
   readarray -t artists < <(jq -r '.tracks[].artist' "$1")
 else
-  artists=( $(printf "\"$artist\" ""%.s" ${!tracks[@]}) )
+  declare -a artists=$(printf "\"${meta['artist']}\" ""%.s" ${!tracks[@]} | sed -E 's/^(.*)$/( \1 )/g')
 fi
 
 tmpdir=$(mktemp -d)
