@@ -7,3 +7,6 @@ man2pdf() {
   done < <(man -w "$1")
 }
 
+json2bash() {
+  jq -r -c 'to_entries | .[] | select(.value | type != "array" and type != "object") | "[\"\(.key)\"]=\"\(.value)\""' "$1" | tr '\n' ' ' | sed -E 's/^(.*)$/( \1 )/g'
+}

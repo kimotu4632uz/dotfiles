@@ -1,24 +1,19 @@
-#!/bin/bash -e
+#!/bin/bash -ue
 
-echo "enter metadata"
-read -p "album: " album
-read -p "artist: " artist
-read -p "date: " date
-read -p "genre: " genre
-read -r -p "picture: " picture
-read -p "number of track: " num
+. $MYENV/source/utils.sh
 
-tracks=(); artists=()
+[[ "$1" == "" ]] && { echo "incorrect arg"; exit 1; }
 
-for i in $(seq $num); do
-  read -p "track $i title: " title; tracks+=("$title")
+echo "reading metadata from $1 ..."
 
-  if [[ "$artist" == "" ]]; then
-    read -p "track $i artist: " artist_tmp; artists+=("$artist_tmp")
-  else
-    artists+=("$artist")
-  fi
-done
+declare -A meta=$(json2bash "$1")
+readarray -t tracks < <(jq -r '.tracks[].album' "$1")
+
+if [[ "${meta['artist']}" == "" ]]; then
+  readarray -t artists < <(jq -r '.tracks[].artist' "$1")
+else
+  artists=( $(printf "\"$artist\" ""%.s" ${!tracks[@]}) )
+fi
 
 tmpdir=$(mktemp -d)
 cd $tmpdir
@@ -26,21 +21,20 @@ cd $tmpdir
 "$USERPROFILE"/Programs/cdrtools/win32/cdda2wav.exe -B
 id=$(cat audio_01.inf | grep CDDB_DISCID | awk '{print $2}' | sed -E 's/0x(.{8})\r/\U\1/')
 
-if [[ "$picture" == "" ]]; then
+if [[ "${meta['picture']}" == "" ]]; then
     pic_opt=""
 else
-    pic_opt="--picture "$(wslpath "$picture")
+    pic_opt="--picture "$(wslpath "${meta['picture']}")
 fi
 
 for i in ${!tracks[@]}; do
   iz=$(printf "%02d" $((i + 1)))
 
-  flac -f -8 $pic_opt -T title="${tracks[i]}" -T artist="${artists[i]}" -T album="$album" -T date="$date" -T genre="$genre" -T tracknumber=$((i + 1)) -o ${id}_${iz}.flac audio_${iz}.wav
-  opusenc --bitrate 160 $pic_opt --title "${tracks[i]}" --artist "${artists[i]}" --album "$album" --date "$date" --genre "$genre" --tracknumber $((i + 1)) audio_${iz}.wav ${id}_${iz}.opus
+  flac -f -8 $pic_opt -T title="${tracks[i]}" -T artist="${artists[i]}" -T album="${meta['album']}" -T date="${meta['date']}" -T genre="${meta['genre']}" -T tracknumber=$((i + 1)) -o ${id}_${iz}.flac audio_${iz}.wav
+  #opusenc --bitrate 160 $pic_opt --title "${tracks[i]}" --artist "${artists[i]}" --album "$album" --date "$date" --genre "$genre" --tracknumber $((i + 1)) audio_${iz}.wav ${id}_${iz}.opus
 done
 
 cd $HOME
-mv $tmpdir/*.flac "$USERPROFILE"/Music/Music
-mv $tmpdir/*.opus "$USERPROFILE"/Music/Music
+mv $tmpdir/*.flac "$USERPROFILE"/Music/
+#mv $tmpdir/*.opus "$USERPROFILE"/Music/Music
 rm -rf $tmpdir
-
