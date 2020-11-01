@@ -1,30 +1,59 @@
-#!/bin/bash -ue
+#!/bin/bash -e
 
-. $MYENV/source/utils.sh
+source $MYENV/source/utils.sh
 
-[[ "$1" == "" ]] && { echo "incorrect arg"; exit 1; }
+[[ $# == 0 ]] && { echo "Usage: encode.sh [--picture PICTURE] JSON"; exit 0; }
+            
 
-echo "reading metadata from $1 ..."
+for OPT in "$@"; do
+    case $OPT in
+        -h | --help)
+            echo "Usage: encode.sh [--picture PICTURE] JSON"
+            exit 0
+            ;;
 
-declare -A meta=$(json2bash "$1")
-readarray -t tracks < <(jq -r '.tracks[].album' "$1")
+        --picture)
+            picture="$2"
+            shift 2
+            ;;
+
+        -*)
+            echo "encode.sh: illegal option -- '$(echo $1 | sed 's/^-*//')'" 1>&2
+            exit 1
+            ;;
+
+        *)
+            if [[ ! -z "$1" ]] && [[ ! "$1" =~ ^-+ ]]; then
+                json="$1"
+                shift 1
+            fi
+            ;;
+    esac
+done
+
+
+echo "reading metadata from $json ..."
+
+declare -A meta=$(json2bash "$json")
+readarray -t tracks < <(jq -r '.tracks[].title' "$json")
 
 if [[ "${meta['artist']}" == "" ]]; then
-  readarray -t artists < <(jq -r '.tracks[].artist' "$1")
+  readarray -t artists < <(jq -r '.tracks[].artist' "$json")
 else
   declare -a artists=$(printf "\"${meta['artist']}\" ""%.s" ${!tracks[@]} | sed -E 's/^(.*)$/( \1 )/g')
 fi
 
 tmpdir=$(mktemp -d)
-cd $tmpdir
+cd "$tmpdir"
 
 "$USERPROFILE"/Programs/cdrtools/win32/cdda2wav.exe -B
+
 id=$(cat audio_01.inf | grep CDDB_DISCID | awk '{print $2}' | sed -E 's/0x(.{8})\r/\U\1/')
 
-if [[ "${meta['picture']}" == "" ]]; then
+if [[ ${picture-''} == '' ]]; then
     pic_opt=""
 else
-    pic_opt="--picture "$(wslpath "${meta['picture']}")
+    pic_opt="--picture $picture"
 fi
 
 for i in ${!tracks[@]}; do
@@ -38,3 +67,4 @@ cd $HOME
 mv $tmpdir/*.flac "$USERPROFILE"/Music/
 #mv $tmpdir/*.opus "$USERPROFILE"/Music/Music
 rm -rf $tmpdir
+
