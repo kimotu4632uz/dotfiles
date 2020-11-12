@@ -33,9 +33,6 @@ fi
 
 #WSL only setting
 if type_q cmd.exe; then
-    $MYENV/bin/gpg-agent-relay.sh &
-    $MYENV/bin/ssh-agent-relay.sh &
-
     export PASSWORD_STORE_DIR=${USERPROFILE:-$HOME}/.password-store/
     export EDITOR=vim
 fi
