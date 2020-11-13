@@ -6,7 +6,6 @@ export TERM=xterm-256color
 export PATH=$PATH:$HOME/.local/bin
 #source ~/.cargo/env
 source ~/.myenv/init.sh
-export SSH_AUTH_SOCK=$HOME/.ssh/ssh-agent.sock
 export MAKEFLAGS="-j$[$(grep cpu.cores /proc/cpuinfo | sort -u | sed 's/[^0-9]//g') + 1]"
 
 export XDG_CONFIG_HOME=$HOME/.config
@@ -25,3 +24,4 @@ export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
 
 
 export PATH="$HOME/.cargo/bin:$PATH"
+

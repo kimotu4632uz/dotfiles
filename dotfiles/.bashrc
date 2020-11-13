@@ -33,7 +33,7 @@ fi
 
 #WSL only setting
 if type_q cmd.exe; then
-    export PASSWORD_STORE_DIR=${USERPROFILE:-$HOME}/.password-store/
+    export PASSWORD_STORE_DIR=${USERPROFILE:-$HOME}/.password-store
     export EDITOR=vim
 fi
 

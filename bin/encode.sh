@@ -43,23 +43,27 @@ else
   declare -a artists=$(printf "\"${meta['artist']}\" ""%.s" ${!tracks[@]} | sed -E 's/^(.*)$/( \1 )/g')
 fi
 
-tmpdir=$(mktemp -d)
-cd "$tmpdir"
-
-"$USERPROFILE"/Programs/cdrtools/win32/cdda2wav.exe -B
-
-id=$(cat audio_01.inf | grep CDDB_DISCID | awk '{print $2}' | sed -E 's/0x(.{8})\r/\U\1/')
-
 if [[ ${picture-''} == '' ]]; then
     pic_opt=""
 else
-    pic_opt="--picture $picture"
+    pic_opt="--picture $PWD/$picture"
+fi
+
+tmpdir=$(mktemp -d)
+cd "$tmpdir"
+
+"$USERPROFILE"/Programs/cd-paranoia.exe -B
+
+id=$("$USERPROFILE"/Programs/cdio-discid.exe | tr -dc '[:alnum:]')
+
+if [[ $? != 0 ]]; then
+  exit 1
 fi
 
 for i in ${!tracks[@]}; do
   iz=$(printf "%02d" $((i + 1)))
 
-  flac -f -8 $pic_opt -T title="${tracks[i]}" -T artist="${artists[i]}" -T album="${meta['album']}" -T date="${meta['date']}" -T genre="${meta['genre']}" -T tracknumber=$((i + 1)) -o ${id}_${iz}.flac audio_${iz}.wav
+  flac -f -8 $pic_opt -T title="${tracks[i]}" -T artist="${artists[i]}" -T album="${meta['album']}" -T date="${meta['date']}" -T genre="${meta['genre']}" -T tracknumber=$((i + 1)) -o ${id}_${iz}.flac track${iz}.cdda.wav
   #opusenc --bitrate 160 $pic_opt --title "${tracks[i]}" --artist "${artists[i]}" --album "$album" --date "$date" --genre "$genre" --tracknumber $((i + 1)) audio_${iz}.wav ${id}_${iz}.opus
 done
 
