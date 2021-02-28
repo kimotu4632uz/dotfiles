@@ -31,6 +31,14 @@ else
     echo "please install bash-completion and git"
 fi
 
+while read line; do
+  source "$line"
+done < <(find /usr/share/bash-completion/completions -type f)
+
+while read line; do
+  source "$line"
+done < <(find $HOME/.local/share/bash-completion/completions -type f)
+
 #WSL only setting
 if type_q cmd.exe; then
     export PASSWORD_STORE_DIR=${USERPROFILE:-$HOME}/.password-store

@@ -3,9 +3,6 @@ export HISTCONTROL=ignoreboth
 
 export TERM=xterm-256color
 
-export PATH=$PATH:$HOME/.local/bin
-#source ~/.cargo/env
-source ~/.myenv/init.sh
 export MAKEFLAGS="-j$[$(grep cpu.cores /proc/cpuinfo | sort -u | sed 's/[^0-9]//g') + 1]"
 
 export XDG_CONFIG_HOME=$HOME/.config
@@ -22,6 +19,6 @@ export LESS_TERMCAP_so=$'\E[00;47;30m'   # Begins standout-mode.
 export LESS_TERMCAP_ue=$'\E[0m'          # Ends underline.
 export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
 
-
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH=$PATH:$HOME/.local/bin
+export PATH="$PATH:$HOME/.cargo/bin"
 

@@ -10,8 +10,8 @@ from pathlib import Path
 
 class Spotify:
     def __init__(self, client_cred, cred):
-        self.__client_id = json.loads(Path(client_cred).read_text())['client_id']
-        self.__client_secret = json.loads(Path(client_cred).read_text())['client_secret']
+        self.__client_id = json.loads(Path(client_cred).expanduser().resolve().read_text())['client_id']
+        self.__client_secret = json.loads(Path(client_cred).expanduser().resolve().read_text())['client_secret']
         self.__cred = cred
         
         if Path(cred).is_file():
@@ -103,7 +103,7 @@ def getAlbum(token, id, pic_file):
 
 
 if __name__ == '__main__':
-    token = Spotify('/home/kimotu/.spotify_client', '/home/kimotu/.spotify_cred')
+    token = Spotify('~/.spotify_client', '~/.spotify_cred')
 
     parser = ArgumentParser()
     subparse = parser.add_subparsers()
