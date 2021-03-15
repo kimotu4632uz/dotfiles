@@ -38,7 +38,6 @@ def main():
     args = parser.parse_args()
 
     (urls, datauris) = get_urls(args.url)
-    print(urls)
 
     if len(urls) > 0:
         print(f'{len(urls)} urls found from image tag.')
