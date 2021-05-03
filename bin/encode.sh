@@ -61,7 +61,7 @@ main() {
 
   "$USERPROFILE"/Programs/cd-paranoia.exe -B
 
-  id=$("$USERPROFILE"/Programs/cdio-discid.exe | tr -dc '[:alnum:]')
+  id=$("$USERPROFILE"/Programs/discid.exe -f | tr -dc '[:alnum:]')
   count=$(find . -maxdepth 1 -mindepth 1 -name "*.wav" | wc -l)
 
   for iz in $(seq -f "%02g" "$count"); do
