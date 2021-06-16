@@ -27,4 +27,4 @@ while read file; do
   )
 done < <(find $MYENV/{source,bin} -maxdepth 1 -type f -name "*.src")
 
-find $MYENV/bin -name "*.sh" -exec chmod +x {} \;
+find $MYENV/bin -type f -not -name "*.src" -exec chmod +x {} \;
