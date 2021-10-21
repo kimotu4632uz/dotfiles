@@ -7,7 +7,7 @@ export MAKEFLAGS="-j$[$(grep cpu.cores /proc/cpuinfo | sort -u | sed 's/[^0-9]//
 
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
-export XDG_DATA_HOME=$HOME/.cache
+export XDG_DATA_HOME=$HOME/.local/share
 
 export PAGER=less
 export LESS="-S -N -x4 -R -i -M"
@@ -19,6 +19,6 @@ export LESS_TERMCAP_so=$'\E[00;47;30m'   # Begins standout-mode.
 export LESS_TERMCAP_ue=$'\E[0m'          # Ends underline.
 export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
 
-export PATH=$PATH:$HOME/.local/bin
+export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 
