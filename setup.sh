@@ -3,15 +3,15 @@ export MYENV=${MYENV:-$HOME/.myenv}
 git clone git@github.com:kimotu4632uz/myenv.git $MYENV
 
 while read file; do
-  ln -s "$file" $HOME/"${file##*/}"
+  ln -sf "$file" $HOME/"${file##*/}"
 done < <(find $MYENV/dotfiles -maxdepth 1 -type f)
 
 if [ ! -d $MYENV/bin/3rdparty ]; then
-  mkdir $MYENV/bin/3rdparty 
+  mkdir -p $MYENV/bin/3rdparty 
 fi
 
 if [ ! -d $MYENV/source/3rdparty ]; then
-  mkdir $MYENV/source/3rdparty 
+  mkdir -p $MYENV/source/3rdparty 
 fi
 
 while read file; do
