@@ -1,5 +1,4 @@
-#ignorespace+ignoredups = ignoreboth
-export HISTCONTROL=ignoreboth
+export HISTCONTROL=erasedups
 
 export TERM=xterm-256color
 
