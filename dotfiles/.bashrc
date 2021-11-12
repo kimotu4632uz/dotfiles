@@ -2,10 +2,6 @@ source $HOME/.bash_profile
 source $HOME/.myenv/init.sh
 shopt -s autocd extglob globstar direxpand
 
-if type_q cmd.exe; then
-  eval `dircolors ~/.colorrc`
-fi
-
 ## alias
 alias ls='ls --color=auto'
 alias la='ls -AFh'
