@@ -19,19 +19,10 @@ alias space2tab="unexpand -t 4"
 alias diff_up="diff -up"
 alias diff_dir="diff -uprN"
 
-# define custom prompt
-if type_q __git_ps1; then
-  [[ $(id -u) = 0 ]] && ROOT_CHECK='# '
-  PROMPT_COMMAND='__git_ps1 "\n\[\e[1;96m\]\w\[\e[m\]" "\n\\[\e[1;31m\]${ROOT_CHECK}\[\e[1;35m\]❯\[\e[m\] " " %s "'
-  GIT_PS1_SHOWDIRTYSTATE=1
-  GIT_PS1_SHOWUPSTREAM="auto"
-else
-  echo "please install bash-completion and git"
-fi
-
 #WSL only setting
 if type_q cmd.exe; then
   export PASSWORD_STORE_DIR=${USERPROFILE:-$HOME}/.password-store
   export EDITOR=vim
 fi
 
+eval "$(starship init bash)"
