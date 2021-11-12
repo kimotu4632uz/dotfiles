@@ -23,7 +23,7 @@ install_dotfiles() {
 install_config() {
   mkdir -p $HOME/.config
   while read file; do
-    ln -sf "$file" "$HOME/.config/$file"
+    ln -sf "$MYENV/config/${file#*/}" "$HOME/.config/${file#*/}"
   done
 }
 
@@ -50,7 +50,7 @@ main() {
     find $MYENV/dotfiles/wsl -maxdepth 1 -type f | install_dotfiles
   fi
 
-  find $MYENV/config -maxdepth 1 -type f | install_config
+  (cd $MYENV/config && find . -type f | install_config)
 
   find $MYENV/{bin,source} -maxdepth 1 -type f -name "*.src" | install_bins
   if check_wsl && [ -d $MYENV/bin/wsl ]; then
