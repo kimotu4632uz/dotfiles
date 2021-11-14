@@ -1,0 +1,3 @@
+[ "$MYENV" ] || export MYENV="$HOME/.myenv"
+export PATH="$PATH:$MYENV/bin:$MYENV/bin/3rdparty"
+type cmd.exe &> /dev/null && export PATH="$PATH:$MYENV/bin/wsl"

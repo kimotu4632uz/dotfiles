@@ -1,5 +1,5 @@
 source $HOME/.bash_profile
-source $HOME/.myenv/init.sh
+source $HOME/.myenv/env
 shopt -s autocd extglob globstar direxpand
 
 ## alias
