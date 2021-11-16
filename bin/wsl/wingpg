@@ -1,34 +1,24 @@
-#!/bin/bash
+#!/bin/bash -e
 
-modify_args() {
-  local wslpath="anywslpath"
-  local file_options=("-o" "--output" "--options" "--log-file")
-  local arg_options=("--tofu-policy" "--default-key" "--encrypt-to" "--group" "--auto-key-locate" "-r" "--recipient" "-u" "--local-user")
+wslpath="anywslpath"
+file_options=("-o" "--output" "--options" "--log-file")
+arg_options=("--tofu-policy" "--default-key" "--encrypt-to" "--group" "--auto-key-locate" "-r" "--recipient" "-u" "--local-user")
 
-  local argc=$#
-  local argv=("$@")
+argc=$#
+argv=("$@")
 
-  for (( i=0; i<argc; i++ )); do
-    for opt in "${file_options[@]}"; do
-      if [[ "${argv[$i]}" == "$opt" ]]; then
-        i=$((i+1))
-        argv[$i]="$($wslpath "${argv[$i]}")"
-        continue
-      fi
-    done
-    if [[ "${argv[$i]:0:1}" == "-" ]]; then
-      for opt in "${arg_options[@]}"; do
-        if [[ "${argv[$i]}" == "$opt" ]]; then
-          i=$((i+1))
-          continue
-        fi
-      done
-      continue
+for (( i=0; i<argc; i++ )); do
+  if [[ "${argv[$i]:0:1}" == "-" ]]; then
+    if printf '%s\n' "${arg_options[@]}" | grep -qx -- "${argv[$i]}"; then
+      i=$((i+1))
+    elif printf '%s\n' "${file_options[@]}" | grep -qx -- "${argv[$i]}"; then
+      i=$((i+1))
+      argv[$i]="$($wslpath ${argv[$i]})"
     fi
-    argv[$i]="$($wslpath "${argv[$i]}")"
-  done
+  else
+    argv[$i]="$($wslpath ${argv[$i]})"
+  fi
+done
 
-  echo "${argv[@]}"
-}
+gpg.exe "${argv[@]}"
 
-gpg.exe $(modify_args "$@")
