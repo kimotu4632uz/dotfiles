@@ -11,7 +11,7 @@ print_help() {
 
 init() {
   if [ ! -d $MYENV ]; then
-    git clone git@github.com:kimotu4632uz/myenv.git $MYENV
+    git clone https://github.com/kimotu4632uz/myenv.git $MYENV
   fi
 
   mkdir -p $MYENV/bin/3rdparty 
