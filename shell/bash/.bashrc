@@ -13,7 +13,7 @@ alias diff_up="diff -up"
 alias diff_dir="diff -uprN"
 
 #WSL only setting
-if type_q cmd.exe; then
+if type cmd.exe &> /dev/null; then
   export PASSWORD_STORE_DIR=${USERPROFILE:-$HOME}/.password-store
 fi
 
