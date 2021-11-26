@@ -4,9 +4,5 @@
 	signingkey = 469F6B032CFFEFBA
 [commit]
 	gpgsign = true
-[core]
-	sshcommand = ssh.exe
-[gpg]
-	program = gpg.exe
 [ghq]
     root = /mnt/d/git

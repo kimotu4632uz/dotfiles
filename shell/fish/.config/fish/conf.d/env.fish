@@ -26,5 +26,8 @@ export fish_greeting=""
 
 if type cmd.exe &> /dev/null
   export PASSWORD_STORE_DIR="$USERPROFILE/.password-store"
+  export DONT_PROMPT_WSL_INSTALL=1
 end
+
+export SSH_AUTH_SOCK=(gpgconf --list-dirs agent-ssh-socket)
 
