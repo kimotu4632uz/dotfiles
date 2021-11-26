@@ -3,8 +3,9 @@ set -e
 set -o pipefail
 
 cleanup() {
-  cd "$HOME"
-  rm -rf "$tmpdir"
+#  cd "$HOME"
+#  rm -rf "$tmpdir"
+  :
 }
 
 err_handle() {
@@ -21,56 +22,60 @@ sig_handle() {
 }
 
 print_help() {
-  echo "Usage: encode.sh [OPTIONS]"
+  echo "Usage: ${0##*/} [OPTIONS]"
   echo ""
   echo "OPTIONS:"
   echo "  -o, --output <OUTDIR>  Place files to OUTDIR"
 }
 
+check_depends() {
+  [[ "$USERPROFILE" == "" ]] && { echo "Error: env \$USERPROFILE is not set"; exit 1; }
+  type cd-paranoia.exe &> /dev/null || { echo "Error: cd-paranoia.exe is not in your PATH"; exit 1; }
+  type discid.sh &> /dev/null || { echo "Error: discid.sh is not in your PATH"; exit 1; }
+}
+
 main() {
   local outdir="$USERPROFILE"/Music
 
-  for OPT in "$@"; do
+  while getopts o:h OPT; do
     case $OPT in
-      -h | --help)
+      o)
+        outdir="${OPTARG%/}"
+        ;;
+
+      h)
         print_help
         exit 0
         ;;
 
-      -o | --output)
-        outdir="${2%/}"
-        shift 2
-        ;;
-
-      -*)
-        echo "encode.sh: illegal option -- '$(echo $1 | sed 's/^-*//')'" 1>&2
+      \?)
         exit 1
         ;;
     esac
   done
 
-  [[ "$USERPROFILE" == "" ]] && { echo "Error: env \$USERPROFILE is not set"; exit 1; }
-
   trap sig_handle SIGINT
   trap err_handle ERR
 
+  check_depends
+
   local tmpdir id count
 
-  tmpdir=$(mktemp -d)
-  cd "$tmpdir"
+#  tmpdir=$(mktemp -d)
+#  cd "$tmpdir"
+  
+  cd "$outdir"
 
-  "$USERPROFILE"/Programs/cd-paranoia.exe -B
+  cd-paranoia.exe -B
 
-  id=$("$USERPROFILE"/Programs/discid.exe -f | tr -dc '[:alnum:]')
-  id="${id^^}"
+  id=$(discid.sh -i)
+  discid.sh > "$outdir"/"${id}.meta.txt"
 
-  "$USERPROFILE"/Programs/discid.exe > "$outdir"/"${id}.meta.txt"
-
-  count=$(find . -maxdepth 1 -mindepth 1 -name "*.wav" | wc -l)
+  count=$(find . -maxdepth 1 -mindepth 1 -name "track*.cdda.wav" | wc -l)
 
   for iz in $(seq -f "%02g" "$count"); do
     flac -f -8 -o "$outdir"/"${id}_${iz}.flac" "track${iz}.cdda.wav"
-    #opusenc --bitrate 160 "track${iz}.cdda.wav" "$outdir"/"${id}_${iz}.opus"
+    rm "track${iz}.cdda.wav"
   done
 
   cleanup
