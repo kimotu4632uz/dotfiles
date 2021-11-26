@@ -3,9 +3,8 @@ set -e
 set -o pipefail
 
 cleanup() {
-#  cd "$HOME"
-#  rm -rf "$tmpdir"
-  :
+  cd "$HOME"
+  rm -rf "$tmpdir"
 }
 
 err_handle() {
@@ -29,13 +28,12 @@ print_help() {
 }
 
 check_depends() {
-  [[ "$USERPROFILE" == "" ]] && { echo "Error: env \$USERPROFILE is not set"; exit 1; }
-  type cd-paranoia.exe &> /dev/null || { echo "Error: cd-paranoia.exe is not in your PATH"; exit 1; }
-  type discid.sh &> /dev/null || { echo "Error: discid.sh is not in your PATH"; exit 1; }
+  type abcde &> /dev/null || { echo "Error: abcde is not in your PATH"; exit 1; }
+  type cd-discid.py &> /dev/null || { echo "Error: cd-discid.py is not in your PATH"; exit 1; }
 }
 
 main() {
-  local outdir="$USERPROFILE"/Music
+  local outdir="$HOME"
 
   while getopts o:h OPT; do
     case $OPT in
@@ -59,23 +57,19 @@ main() {
 
   check_depends
 
-  local tmpdir id count
+  local tmpdir id
 
-#  tmpdir=$(mktemp -d)
-#  cd "$tmpdir"
+  tmpdir=$(mktemp -d)
+  cd "$tmpdir"
   
-  cd "$outdir"
+  id=$(cd-discid.py -i)
+  cd-discid.py > "$outdir"/"${id}.meta.txt"
 
-  cd-paranoia.exe -B
+  echo "OUTPUTFORMAT='${id}_"'${TRACKNUM}'\' > id.abcde.conf
+  abcde -o "flac:-8" -c "$PWD/id.abcde.conf"
 
-  id=$(discid.sh -i)
-  discid.sh > "$outdir"/"${id}.meta.txt"
-
-  count=$(find . -maxdepth 1 -mindepth 1 -name "track*.cdda.wav" | wc -l)
-
-  for iz in $(seq -f "%02g" "$count"); do
-    flac -f -8 -o "$outdir"/"${id}_${iz}.flac" "track${iz}.cdda.wav"
-    rm "track${iz}.cdda.wav"
+  for file in $(find . -maxdepth 1 -mindepth 1 -name "*.flac"); do
+    mv "$file" "$outdir/"
   done
 
   cleanup
