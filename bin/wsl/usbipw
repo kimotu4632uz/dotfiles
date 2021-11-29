@@ -1,0 +1,43 @@
+#!/bin/bash
+
+print_help_list() {
+  echo "usage: usbipw list"
+  exit 0
+
+}
+
+print_help_attach() {
+  echo "usage: usbipw attach <args>"
+  echo "    -b, --busid=<busid>    Busid of the device on windows host"
+  echo "    -d, --device=<devid>    Id of the virtual UDC on windows host"
+  exit 0
+}
+
+main() {
+  local argc="$#"
+  local argv=("$@")
+
+  local remote_ip=$(ip route | grep 'default via' | grep -Eo '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')
+
+  if [[ $argc > 0 ]]; then
+    if [[ "${argv[0]}" == "list" ]]; then
+      if [[ "${argv[1]}" == "help" ]]; then
+        print_help_list
+      else
+        sudo usbip list -r $remote_ip
+      fi
+    elif [[ "${argv[0]}" == "attach" ]]; then
+      if [[ "${argv[1]}" == "help" ]]; then
+        print_help_attach
+      else
+        sudo usbip attach -r $remote_ip "${argv[@]:1}"
+      fi
+    else
+      sudo usbip "$@"
+    fi
+  else
+    usbip
+  fi
+}
+
+main "$@"
