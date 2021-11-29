@@ -25,7 +25,7 @@ export PATH="$PATH:$HOME/.local/bin"
 export fish_greeting=""
 
 if type cmd.exe &> /dev/null
-  export PASSWORD_STORE_DIR="$USERPROFILE/.password-store"
+  export PASSWORD_STORE_DIR="/mnt/c/Users/$USER/.password-store"
   export DONT_PROMPT_WSL_INSTALL=1
 end
 
