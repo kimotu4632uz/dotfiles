@@ -35,6 +35,6 @@ if type cmd.exe &> /dev/null
   export XMODIFIERS=@im=fcitx
   export DefaultIMModule=fcitx
 
-  export DISPLAY=(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):1
+  export DISPLAY=(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 end
 
