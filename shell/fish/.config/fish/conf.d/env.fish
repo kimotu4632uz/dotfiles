@@ -1,6 +1,6 @@
 export TERM=xterm-256color
 
-export MAKEFLAGS="-j(math (grep cpu.cores /proc/cpuinfo | sort -u | sed 's/[^0-9]//g') + 1)"
+export MAKEFLAGS="-j"(math (grep cpu.cores /proc/cpuinfo | sort -u | sed 's/[^0-9]//g') + 1)
 
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
@@ -24,10 +24,17 @@ export PATH="$PATH:$HOME/.local/bin"
 
 export fish_greeting=""
 
+export SSH_AUTH_SOCK=(gpgconf --list-dirs agent-ssh-socket)
+
 if type cmd.exe &> /dev/null
   export PASSWORD_STORE_DIR="/mnt/c/Users/$USER/.password-store"
   export DONT_PROMPT_WSL_INSTALL=1
-end
 
-export SSH_AUTH_SOCK=(gpgconf --list-dirs agent-ssh-socket)
+  export GTK_IM_MODULE=fcitx
+  export QT_IM_MODULE=fcitx
+  export XMODIFIERS=@im=fcitx
+  export DefaultIMModule=fcitx
+
+  export DISPLAY=(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):1
+end
 
