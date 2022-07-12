@@ -28,13 +28,5 @@ export SSH_AUTH_SOCK=(gpgconf --list-dirs agent-ssh-socket)
 
 if type cmd.exe &> /dev/null
   export PASSWORD_STORE_DIR="/mnt/c/Users/$USER/.password-store"
-  export DONT_PROMPT_WSL_INSTALL=1
-
-  export GTK_IM_MODULE=fcitx
-  export QT_IM_MODULE=fcitx
-  export XMODIFIERS=@im=fcitx
-  export DefaultIMModule=fcitx
-
-  export DISPLAY=(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 end
 
