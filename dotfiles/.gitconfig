@@ -4,3 +4,7 @@
 	signingkey = 469F6B032CFFEFBA
 [commit]
 	gpgsign = true
+[init]
+	defaultBranch = main
+[ghq]
+	root = ~/src
