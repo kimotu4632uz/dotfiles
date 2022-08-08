@@ -1,8 +1,0 @@
-[user]
-	email = 32472396+kimotu4632uz@users.noreply.github.com
-	name = kimotu4632uz
-	signingkey = 469F6B032CFFEFBA
-[commit]
-	gpgsign = true
-[ghq]
-    root = /mnt/d/git
