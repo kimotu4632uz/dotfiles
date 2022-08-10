@@ -27,7 +27,8 @@ return require('packer').startup(function()
   use 'lambdalisue/nerdfont.vim'
   use 'lambdalisue/fern-renderer-nerdfont.vim'
 
-	use 'RRethy/nvim-base16'
+  use 'RRethy/nvim-base16'
+  use "EdenEast/nightfox.nvim"
 
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
@@ -37,7 +38,7 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-path'
 
-	use 'tpope/vim-surround'
+  use 'tpope/vim-surround'
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

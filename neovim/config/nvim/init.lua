@@ -1,6 +1,6 @@
 require('packer-bootstrap')
 
-vim.cmd('colorscheme base16-nord')
+vim.cmd('colorscheme nordfox')
 vim.o.winblend = 10
 vim.o.pumblend = 10
 
