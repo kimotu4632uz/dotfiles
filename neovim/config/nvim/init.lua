@@ -118,10 +118,13 @@ cmp.setup.cmdline(':', {
 vim.o.wrap = false
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
+vim.o.expandtab = true
 vim.o.number = true
 vim.o.guicursor = 'a:ver10-blinkon100'
 vim.o.ignorecase = true
 vim.o.smartcase = true
+
+vim.opt.clipboard:append{'unnamedplus'}
 
 vim.g.mapleader = ' '
 vim.keymap.set('i', 'jj', '<ESC>')
