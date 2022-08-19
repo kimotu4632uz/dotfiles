@@ -34,4 +34,5 @@ i3lock \
 --time-str="%H:%M:%S"        \
 --date-str="%Y-%m-%d"    \
 --keylayout 1                \
+"$@"
 
