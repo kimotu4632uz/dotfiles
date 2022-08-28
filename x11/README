@@ -1,0 +1,11 @@
+setup.shでインストールしないでください
+
+i3を使う場合
+  Xmodmap -> ~/.Xmodmap
+  10-touchpad.conf -> /etc/X11/xorg.conf.d/
+
+swayを使う場合
+  jp106_custom -> ~/.xkb/symbols/
+
+に手動でコピーしてください
+

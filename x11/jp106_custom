@@ -1,0 +1,16 @@
+default partial alphanumeric_keys
+
+xkb_symbols "basic" {
+  include "jp(106)"
+
+  name[Group1] = "Japanese (mod)";
+
+  key <CAPS> {
+    type[Group1] = "ONE_LEVEL",
+    symbols[Group1] = [ Return ]
+  };
+
+  key <HZTG> { [ NoSymbol ] };
+
+  key <RTRN> { [ NoSymbol ] };
+};
