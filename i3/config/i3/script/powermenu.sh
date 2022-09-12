@@ -18,7 +18,7 @@ rofi_cmd="
 		-dpi 144
 		-format i
 		-selected-row 2
-		-theme $HOME/.config/rofi/powermenu/full_circle.rasi"
+		-theme $HOME/.config/rofi/powermenu/type-4/style-1.rasi"
 
 selected="$(echo "$menu_key" | $rofi_cmd -p "Uptime: $uptime")"
 
