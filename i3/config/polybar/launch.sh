@@ -7,4 +7,7 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch Polybar, using default config location ~/.config/polybar/config
-polybar &
+MONITOR=DP-0 polybar -c ~/.config/polybar/config.ini &
+
+MONITOR=HDMI-0 polybar -c ~/.config/polybar/config_sub.ini &
+
