@@ -24,7 +24,7 @@ print_help() {
   echo "Usage: ${0##*/} [OPTIONS]"
   echo ""
   echo "OPTIONS:"
-  echo "  -o, --output <OUTDIR>  Place files to OUTDIR"
+  echo "  -o    <OUTDIR>  Place files to OUTDIR"
 }
 
 check_depends() {
@@ -33,7 +33,7 @@ check_depends() {
 }
 
 main() {
-  local outdir="$HOME"
+  local outdir="$HOME/Music"
 
   while getopts o:h OPT; do
     case $OPT in
