@@ -1,88 +1,134 @@
 #!/bin/bash -e
 
-print_help() {
-  echo "usage: $0 [MODULES]"
-  exit
-}
+PKGFILE="pkgs.txt"
+PKGMGR="yay"
+PKGMGR_ARG=("-S" "--noconfirm")
+
+BLACKLIST=("$PKGFILE")
+
+SCRIPT_DIR="$(cd ${0%/*}; pwd)"
 
 
-install_bin() {
-  local dir="$1"
-  local dst="$HOME/.local/bin"
+install_src() {
+  local src="$1"
+  local dst="$2"
 
-  mkdir -p "$dst"
+  (
+    source "$src"
 
-  for file in $(find "$dir" -maxdepth 1 -type f -name "*.src"); do
-    (
-    source "$file"
-    curl -o "${file%.*}" "$url"
-    chmod +x "${file%.*}"
+    curl -L -o "$dst" "$url"
   
-    if [[ "$patch" != "" ]]; then
-      patch --backup-if-mismatch -u "${file%.*}" < "${file%/*}/$patch"
+    if [[ ! -z "$chmod" ]]; then
+      chmod $chmod "$dst"
     fi
-  
-    mv "${file%.*}" "$dst/"
-    )
-  done
-
-  for file in $(find "$dir" -maxdepth 1 -type f -not -name "*.src"); do
-    ln -sf "$PWD/$dir/${file##*/}" "$dst/${file##*/}"
-  done
+  )
 }
 
 
 install_module() {
   local module="$1"
+  local blacklist_str="$(IFS=$'\n'; echo "${BLACKLIST[*]}")"
 
   echo "install module ${module}..."
 
-  for line in $(cd $module && find . -mindepth 1 -maxdepth 1 -type f); do
-    local file=${line#*/}
-    local src="$module/$file" 
-    local dst="$HOME/.$file"
+  # dotfiles
+  for line in $(cd "$SCRIPT_DIR/$module" && find . -mindepth 1); do
+    local entry="${line#*/}"
+    local entry_fname="${entry##*/}"
 
-    echo "$src -> $dst"
-    ln -sf "$PWD/$src" "$dst"
-  done
+    local src="$SCRIPT_DIR/$module/$entry"
+    local dst="$HOME/.$entry"
 
-  if [[ -d "$module/config" ]]; then
-    for line in $(cd "$module/config" && find . -mindepth 1); do
-      local entry="${line#*/}"
-      local src="$module/config/$entry"
-      local dst="$HOME/.config/$entry"
+    if [[ -f "$src" ]]; then
+      # ignore if in blacklist
+      if ! echo "$blacklist_str" | grep -xq "$entry_fname"; then 
 
-      if [[ -f "$src" ]]; then
-        echo "$src -> $dst"
-        ln -sf "$PWD/$src" "$dst"
-      else
-        mkdir -p "$dst"
+        # if suffix is "src"
+        if [[ "${entry##*.}" == "src" ]]; then
+          echo "Download ${entry%.*}..."
+
+          install_src "$src" "${dst%.*}"
+        else
+          echo "$entry -> $dst"
+          ln -sf "$src" "$dst"
+        fi
       fi
-    done
-  fi
- 
-  if [[ -d "$module/bin" ]]; then
-    echo "install binary..."
-    install_bin "$module/bin"
-  fi
+
+    else
+      mkdir -p "$dst"
+    fi
+  done
 
   echo ""
 }
 
+
+install_pkg() {
+  local module="$1"
+  local file="$SCRIPT_DIR/$module/$PKGFILE"
+
+  if [[ -f "$file" ]] && [[ ! -z $(cat "$file") ]]; then
+    if type $PKGMGR &> /dev/null; then
+      echo "Install Packages..."
+      echo ""
+
+      # preprocess
+      local pkgs=()
+      cat "$file" | while read line; do
+        if [[ ! "$line" =~ ^#.* ]]; then
+          pkgs+=("$line")
+        fi
+      done
+
+      $PKGMGR "${PKGMGR_ARG[@]}" "${pkgs[@]}"
+      echo ""
+    else
+      echo "Warn: package manager $PKGMGR not found."
+      echo ""
+    fi
+  fi
+}
+
+
+print_help() {
+  echo "Usage: ${0##*/} [-h] [-p] [MODULES]"
+  echo "Option:"
+  echo "  -h    Print print help"
+  echo "  -p    Install package written in $PKGFILE"
+  exit
+}
+
+
 main() {
-  while getopts h OPT; do
+  local pkg_flag=0
+
+  if [[ $# == 0 ]]; then
+    print_help
+    exit
+  fi
+
+  while getopts hp OPT; do
     case $OPT in
       h) print_help
          ;;
-      \?) print_help
+      p) pkg_flag=1
+         ;;
+      \?) exit 1
          ;;
     esac
   done
+  
+  shift $(($OPTIND - 1))
+
 
   modules=("$@")
 
   for module in "${modules[@]}"; do
     install_module "$module"
+
+    if [[ $pkg_flag == 1 ]]; then
+      install_pkg "$module"
+    fi
   done
 }
 
