@@ -8,4 +8,3 @@ alias vi='vim'
 alias diff_up="diff -up"
 alias diff_dir="diff -uprN"
 
-alias gcd='cd (ghq root)/(ghq list | peco --prompt="gcd>")'
