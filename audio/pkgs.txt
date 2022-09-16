@@ -1,0 +1,17 @@
+pipewire
+pipewire-alsa
+pipewire-pulse
+wireplumber
+
+mpd
+mpdris2
+ncmpcpp
+
+# for encode.sh
+abcde
+cdparanoia
+perl-musicbrainz-discid
+perl-webservice-musicbrainz
+
+# for cd-discid.py
+python-discid

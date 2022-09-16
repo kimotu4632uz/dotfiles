@@ -1,0 +1,9 @@
+fish
+
+# for fzf
+fd
+bat
+fzf
+
+# for fish-ghq
+ghq-bin
