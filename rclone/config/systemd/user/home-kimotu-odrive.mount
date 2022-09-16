@@ -1,0 +1,9 @@
+[Unit]
+After=network-online.target
+[Mount]
+Type=rclone
+What=OneDrive:
+Where=/home/kimotu/odrive
+Options=vfs-cache-mode=full,cache-dir=/home/kimotu/.local/var/rclone
+[Install]
+WantedBy=default.target
