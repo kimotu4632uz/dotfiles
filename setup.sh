@@ -75,7 +75,7 @@ install_pkg() {
       # preprocess
       local pkgs=()
       cat "$file" | while read line; do
-        if [[ ! "$line" =~ ^#.* ]]; then
+        if [[ ! "$line" =~ ^#.* ]] && [[ ! -z "$line" ]]; then
           pkgs+=("$line")
         fi
       done
