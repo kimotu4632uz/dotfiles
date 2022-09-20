@@ -28,13 +28,12 @@ lyrics_directory = ~/Music/lyrics
 #mpd_port = 6600
 #
 #mpd_connection_timeout = 5
-#
+
 ## Needed for tag editor and file operations to work.
-##
-#mpd_music_dir = ~/music
-#
+mpd_music_dir = ~/Music
+
 mpd_crossfade_time = 5
-#
+
 # Exclude pattern for random song action
 # http://www.boost.org/doc/libs/1_46_1/libs/regex/doc/html/boost_regex/syntax/perl_syntax.html
 #random_exclude_pattern = "^(temp|midi_songs).*"
@@ -71,18 +70,15 @@ mpd_crossfade_time = 5
 
 visualizer_data_source = /tmp/mpd.fifo
 
-#
+
 # If you set format to 44100:16:2, make it 'yes'.
-#
 visualizer_in_stereo = yes
 
-#
+
 # Note: To enable spectrum frequency visualization you need to compile ncmpcpp
 # with fftw3 support.
-#
 
 # Available values: spectrum, wave, wave_filled, ellipse.
-#
 visualizer_type = spectrum
 
 visualizer_fps = 60
@@ -95,12 +91,11 @@ visualizer_look = ●▮
 #visualizer_color = blue, cyan, green, yellow, magenta, red
 
 # Alternative subset of 256 colors for terminals that support it.
-#
 visualizer_color = 47, 83, 119, 155, 191, 227, 221, 215, 209, 203, 197, 161
 
-#
+
 # Note: The next few visualization options apply to the spectrum visualizer.
-#
+
 
 # Use unicode block characters for a smoother, more continuous look.
 # This will override the visualizer_look option. With transparent terminals
@@ -144,12 +139,12 @@ visualizer_spectrum_hz_max = 20000
 ## Time of inactivity (in seconds) after playlist highlighting will be disabled
 ## (0 = always on).
 ##
-#playlist_disable_highlight_delay = 5
-#
+playlist_disable_highlight_delay = 0
+
 ## Defines how long messages are supposed to be visible.
 ##
-#message_delay_time = 5
-#
+message_delay_time = 3
+
 ##### song format #####
 ##
 ## For a song format you can use:
@@ -216,29 +211,29 @@ visualizer_spectrum_hz_max = 20000
 ##
 ## Note: colors can be nested.
 ##
-#
-#song_list_format = {%a - }{%t}|{$8%f$9}$R{$3%l$9}
-#
+
+song_list_format = "$6{%a »$4 %t$/r$R}|{%f}"
+
 #song_status_format = {{%a{ "%b"{ (%y)}} - }{%t}}|{%f}
 #
 #song_library_format = {%n - }{%t}|{%f}
 #
-#alternative_header_first_line_format = $b$1$aqqu$/a$9 {%t}|{%f} $1$atqq$/a$9$/b
-#
-#alternative_header_second_line_format = {{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}
-#
-#current_item_prefix = $(yellow)$r
-#
+alternative_header_first_line_format = $b$1$aqqu$/a$9 {%t}|{%f} $1$atqq$/a$9$/b
+
+alternative_header_second_line_format = {{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}
+
+current_item_prefix = " » "
+
 #current_item_suffix = $/r$(end)
 #
 #current_item_inactive_column_prefix = $(white)$r
 #
 #current_item_inactive_column_suffix = $/r$(end)
-#
-#now_playing_prefix = $b
-#
-#now_playing_suffix = $/b
-#
+
+now_playing_prefix = $b
+
+now_playing_suffix = $/b
+
 #browser_playlist_prefix = "$2playlist$9 "
 #
 #selected_item_prefix = $6
@@ -305,16 +300,16 @@ visualizer_spectrum_hz_max = 20000
 ## Note: Custom command that will be executed each time song changes. Useful for
 ## notifications etc.
 ##
-#execute_on_song_change = ""
-#
+execute_on_song_change = "~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp_cover_art.sh"
+
 ##
 ## Note: Custom command that will be executed each time player state
 ## changes. The environment variable MPD_PLAYER_STATE is set to the current
 ## state (either unknown, play, pause, or stop) for its duration.
 ##
-#
-#execute_on_player_state_change = ""
-#
+
+execute_on_player_state_change = ""
+
 #playlist_show_mpd_host = no
 #
 #playlist_show_remaining_time = no
@@ -326,7 +321,7 @@ visualizer_spectrum_hz_max = 20000
 ##
 ## Note: Possible display modes: classic, columns.
 ##
-#playlist_display_mode = columns
+playlist_display_mode = classic
 #
 #browser_display_mode = classic
 #
@@ -342,7 +337,7 @@ visualizer_spectrum_hz_max = 20000
 #
 #seek_time = 1
 #
-#volume_change_step = 2
+volume_change_step = 2
 #
 #autocenter_mode = no
 #
@@ -352,7 +347,9 @@ visualizer_spectrum_hz_max = 20000
 ## Note: You can specify third character which will be used to build 'empty'
 ## part of progressbar.
 ##
-#progressbar_look = =>
+progressbar_look = "█ ▓"
+progressbar_elapsed_color = "white"
+progressbar_color = "black"
 #
 ## Available values: database, playlist.
 ##
@@ -377,17 +374,17 @@ user_interface = alternative
 #default_find_mode = wrapped
 #
 #default_tag_editor_pattern = %n - %t
-#
-#header_visibility = yes
-#
-#statusbar_visibility = yes
-#
+
+header_visibility = no
+
+statusbar_visibility = yes
+
 ## Show the "Connected to ..." message on startup
-#connected_message_on_startup = yes
-#
-#titles_visibility = yes
-#
-#header_text_scrolling = yes
+connected_message_on_startup = no
+
+titles_visibility = yes
+
+header_text_scrolling = yes
 #
 #cyclic_scrolling = no
 #
@@ -426,12 +423,12 @@ user_interface = alternative
 ## media_library, playlist_editor, tag_editor, outputs, visualizer, clock,
 ## lyrics, last_fm.
 ##
-#screen_switcher_mode = playlist, browser
-#
+screen_switcher_mode = playlist, visualizer, media_library, browser, tag_editor, clock
+
 ##
 ## Note: You can define startup screen by choosing screen from the list above.
 ##
-startup_screen = media_library
+startup_screen = playlist
 #
 ##
 ## Note: You can define startup slave screen by choosing screen from the list
@@ -454,13 +451,13 @@ startup_screen = media_library
 #ask_before_clearing_playlists = yes
 #
 #clock_display_seconds = no
-#
-#display_volume_level = yes
-#
-#display_bitrate = no
-#
-#display_remaining_time = no
-#
+
+display_volume_level = yes
+
+display_bitrate = no
+
+display_remaining_time = no
+
 ## Available values: none, basic, extended, perl.
 ##
 #regular_expressions = perl
