@@ -1,10 +1,16 @@
-alias ls='ls --color=auto'
-alias la='ls --color=auto -AFh'
-alias ll='ls --color=auto -AlFh'
-alias grep='grep --color'
-alias mkdir='mkdir -p'
-alias vi='vim'
+abbr -a la ls -AFh
+abbr -a ll ls -AlFh
 
-alias diff_up="diff -up"
-alias diff_dir="diff -uprN"
+abbr -a mkdir mkdir -p
+
+abbr -a dfu diff -up
+abbr -a dfd diff -uprN
+
+abbr -a vi vim
+abbr -a ni nvim
+
+abbr -a gst git status
+abbr -a ga git add
+abbr -a gaa git add .
+abbr -a gd git diff
 
