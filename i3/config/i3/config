@@ -15,8 +15,19 @@ set $mod Mod4
 
 font pango: Noto Sans Regular 10
 
-default_border pixel 1
-default_floating_border pixel 1
+title_align center
+
+# color config
+# class                 border  backgr. text    indicator child_border
+client.focused          #2E3440 #5E81AC #ECEFF4 #2e9ef4   #285577
+client.focused_inactive #2E3440 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #2E3440 #3B4252 #D8DEE9 #292d2e   #222222
+client.urgent           #2E3440 #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+client.background       #ffffff
+
+for_window [class=".*"] border pixel 0
 
 # Set inner/outer gaps
 gaps inner 18
@@ -61,4 +72,5 @@ mode "move_workspace" {
 bindsym $mod+o mode "move_workspace"
 
 for_window [class="Vivaldi-*" window_role="pop-up"] floating enable, move position center
+for_window [class="Vivaldi-*"] layout tabbed
 
