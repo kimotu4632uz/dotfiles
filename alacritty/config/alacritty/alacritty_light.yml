@@ -1,0 +1,5 @@
+import:
+  - ~/.config/alacritty/default.yaml
+  - ~/.config/alacritty/solarized_light.yaml
+  - ~/.config/alacritty/local.yaml
+
