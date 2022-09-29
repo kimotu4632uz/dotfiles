@@ -2,7 +2,7 @@
 
 PKGFILE="pkgs.txt"
 PKGMGR="yay"
-PKGMGR_ARG=("-S" "--noconfirm")
+PKGMGR_ARG=("-S" "--needed" "--noconfirm")
 
 BLACKLIST=("$PKGFILE")
 
@@ -74,11 +74,11 @@ install_pkg() {
 
       # preprocess
       local pkgs=()
-      cat "$file" | while read line; do
+      while read line; do
         if [[ ! "$line" =~ ^#.* ]] && [[ ! -z "$line" ]]; then
           pkgs+=("$line")
         fi
-      done
+      done < "$file"
 
       $PKGMGR "${PKGMGR_ARG[@]}" "${pkgs[@]}"
       echo ""
