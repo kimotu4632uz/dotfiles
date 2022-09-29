@@ -33,6 +33,9 @@ for_window [class=".*"] border pixel 0
 gaps inner 18
 gaps outer 0
 
+for_window [window_role="pop-up"] floating enable, border pixel 1
+for_window [window_role="task_dialog"] floating enable, border pixel 1
+
 
 # resize window (you can also use the mouse for that)
 mode "resize" {

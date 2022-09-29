@@ -9,6 +9,9 @@ xss-lock
 # wallpaper
 feh
 
+# compositor
+picom
+
 # icon for rofi
 # VERY BIG file size, be careful to install
 tela-circle-icon-theme-git

@@ -15,7 +15,7 @@ uptime=$(uptime -p | sed -e 's/up //g')
 rofi_cmd="
   rofi
 	  -dmenu
-		-dpi 144
+		-dpi 96
 		-format i
 		-selected-row 2
 		-theme $HOME/.config/rofi/powermenu/type-4/style-1.rasi"

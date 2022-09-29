@@ -1,0 +1,74 @@
+{
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "splith",
+    "marks": [],
+    "percent": 0.5,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 0,
+            "floating": "auto_off",
+            "marks": [],
+            "percent": 0.5,
+            "swallows": [
+               {
+                   "class": "^Alacritty$",
+                   "instance": "^Alacritty$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "normal",
+            "floating": "auto_off",
+            "layout": "splitv",
+            "marks": [],
+            "percent": 0.5,
+            "type": "con",
+            "nodes": [
+                {
+                    "border": "pixel",
+                    "current_border_width": 0,
+                    "floating": "auto_off",
+                    "marks": [],
+                    "percent": 0.4,
+                    "swallows": [
+                       {
+                           "class": "^ncmpcpp-ueberzug$",
+                           "instance": "^ncmpcpp-ueberzug$"
+                       }
+                    ],
+                    "type": "con"
+                },
+                {
+                    "border": "normal",
+                    "floating": "auto_off",
+                    "layout": "splith",
+                    "marks": [],
+                    "percent": 0.6,
+                    "type": "con",
+                    "nodes": [
+                        {
+                            "border": "pixel",
+                            "current_border_width": 0,
+                            "floating": "auto_off",
+                            "marks": [],
+                            "name": "~",
+                            "percent": 1,
+                            "swallows": [
+                               {
+                                   "class": "^Alacritty$",
+                                   "instance": "^Alacritty$"
+                               }
+                            ],
+                            "type": "con"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
