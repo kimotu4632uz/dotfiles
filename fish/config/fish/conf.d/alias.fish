@@ -13,4 +13,5 @@ abbr -a gst git status
 abbr -a ga git add
 abbr -a gaa git add .
 abbr -a gd git diff
+abbr -a gc git commit -m
 
