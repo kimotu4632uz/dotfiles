@@ -21,3 +21,7 @@ maim
 
 # for polybar module
 playerctl
+
+# GUI settings apps
+xfce4-power-manager
+lxappearance-gtk3
