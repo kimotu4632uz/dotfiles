@@ -16,11 +16,20 @@ picom
 # VERY BIG file size, be careful to install
 tela-circle-icon-theme-git
 
+# cursor theme
+bibata-cursor-theme
+
 # screenshot
 maim
 
 # for polybar module
 playerctl
+
+# key remap tool
+xorg-xmodmap
+
+# load Xresources
+xorg-xrdb
 
 # GUI settings apps
 xfce4-power-manager
