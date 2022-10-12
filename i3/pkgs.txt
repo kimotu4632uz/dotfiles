@@ -31,6 +31,12 @@ xorg-xmodmap
 # load Xresources
 xorg-xrdb
 
+# brightness controler
+light
+
+# notification manager
+dunst
+
 # GUI settings apps
-xfce4-power-manager
 lxappearance-gtk3
+

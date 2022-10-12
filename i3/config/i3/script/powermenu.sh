@@ -4,7 +4,7 @@ menu=(
   "" "systemctl poweroff"
   "" "systemctl reboot"
   "" "~/.config/i3/script/lock.sh"
-  "" "systemctl suspend"
+  "" "systemctl suspend-then-hibernate"
   "" "i3-msg exit"
 )
 
