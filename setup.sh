@@ -4,7 +4,7 @@ PKGFILE="pkgs.txt"
 PKGMGR="yay"
 PKGMGR_ARG=("-S" "--needed" "--noconfirm")
 
-BLACKLIST=("$PKGFILE")
+BLACKLIST=("$PKGFILE" "autorun.sh")
 
 SCRIPT_DIR="$(cd ${0%/*}; pwd)"
 
@@ -128,6 +128,11 @@ main() {
 
     if [[ $pkg_flag == 1 ]]; then
       install_pkg "$module"
+    fi
+
+    local autorun="$SCRIPT_DIR/$module/autorun.sh"
+    if [[ -x "$autorun" ]]; then
+      $autorun
     fi
   done
 }
