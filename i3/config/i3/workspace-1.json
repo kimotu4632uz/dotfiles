@@ -36,7 +36,6 @@
                     "percent": 0.4,
                     "swallows": [
                        {
-                           "class": "^ncmpcpp-ueberzug$",
                            "instance": "^ncmpcpp-ueberzug$"
                        }
                     ],
