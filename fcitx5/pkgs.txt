@@ -1,0 +1,6 @@
+fcitx5-im
+fcitx5-skk
+
+# SKK server for google ime
+yaskkserv2-bin
+
