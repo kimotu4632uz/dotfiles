@@ -28,7 +28,7 @@ return require('packer').startup(function()
   use 'lambdalisue/fern-renderer-nerdfont.vim'
 
   use 'RRethy/nvim-base16'
-  use "EdenEast/nightfox.nvim"
+  use 'EdenEast/nightfox.nvim'
 
   use 'neovim/nvim-lspconfig'
   use 'williamboman/mason.nvim'
@@ -40,7 +40,20 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-path'
 
+  use 'dcampos/nvim-snippy'
+  use 'dcampos/cmp-snippy'
+
   use 'tpope/vim-surround'
+  use 'windwp/nvim-autopairs'
+
+  use {
+    "folke/noice.nvim",
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+      'nvim-treesitter/nvim-treesitter'
+    }
+  }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
