@@ -27,6 +27,7 @@ require('lualine').setup {
 
 
 vim.g['fern#renderer'] = 'nerdfont'
+vim.g['fern#default_hidden'] = 1
 
 require("nvim-autopairs").setup {}
 
