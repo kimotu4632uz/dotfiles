@@ -17,7 +17,8 @@ font pango: Noto Sans Regular 10
 
 title_align center
 
-# color config
+
+# Color config
 # class                 border  backgr. text    indicator child_border
 client.focused          #2E3440 #5E81AC #ECEFF4 #2e9ef4   #285577
 client.focused_inactive #2E3440 #5f676a #ffffff #484e50   #5f676a
@@ -27,17 +28,25 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
 client.background       #ffffff
 
-for_window [class=".*"] border pixel 0
 
 # Set inner/outer gaps
 gaps inner 18
 gaps outer 0
 
+
+# Default window settings
+for_window [class=".*"] border pixel 0
 for_window [window_role="pop-up"] floating enable, border pixel 1
 for_window [window_role="task_dialog"] floating enable, border pixel 1
 
+# Software specific settings
+for_window [class="Vivaldi-*" window_role="pop-up"] floating enable, move position center
+for_window [class="Vivaldi-*"] layout tabbed
 
-# resize window (you can also use the mouse for that)
+for_window [class="Evince"] layout tabbed
+
+
+# Resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -65,6 +74,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 
+# Move workspace between monitors
 mode "move_workspace" {
     bindsym k move workspace to output up
     bindsym j move workspace to output down
@@ -73,7 +83,4 @@ mode "move_workspace" {
 }
 
 bindsym $mod+o mode "move_workspace"
-
-for_window [class="Vivaldi-*" window_role="pop-up"] floating enable, move position center
-for_window [class="Vivaldi-*"] layout tabbed
 
