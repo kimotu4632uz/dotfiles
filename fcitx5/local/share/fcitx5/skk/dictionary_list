@@ -1,1 +1,2 @@
+file=$FCITX_CONFIG_DIR/skk/user.dict,mode=readwrite,type=file
 encoding=EUC-JP,host=localhost,port=1178,type=server
