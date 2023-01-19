@@ -2,6 +2,7 @@
 
 sudo groupadd -f uinput
 sudo gpasswd -a $USER uinput
+sudo gpasswd -a $USER input
 
 if [ ! -f /etc/modules-load.d/uinput.conf ]; then
 sudo tee /etc/modules-load.d/uinput.conf <<EOF >/dev/null
