@@ -21,5 +21,42 @@ local function packer_bootstrap()
 end
 
 
-return { packer_bootstrap = packer_bootstrap }
+function get_bufs_loaded()
+  local bufs_loaded = {}
+
+  for i, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) then
+      table.insert(bufs_loaded, buf)
+    end
+  end
+
+  return bufs_loaded
+end
+
+
+function open_term()
+  local term_buf = nil
+
+  for i, buf in ipairs(get_bufs_loaded()) do
+    if string.find(vim.api.nvim_buf_get_name(buf), "term://") ~= nil then
+      term_buf = buf
+      break
+    end
+  end
+
+  if term_buf ~= nil then
+    -- attach to existing terminal
+    vim.api.nvim_win_set_buf(0, term_buf)
+  else
+    -- if not exist, open new terminal
+    vim.cmd.terminal()
+  end
+
+  -- Disable line number and enter insert mode
+  vim.cmd.startinsert()
+  vim.opt_local.number = false
+end
+
+
+return { packer_bootstrap = packer_bootstrap, open_term = open_term }
 

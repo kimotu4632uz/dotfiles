@@ -1,4 +1,8 @@
 require('plugins')
+local utils = require('utils')
+
+
+-- General Options
 
 vim.o.wrap = false
 vim.o.tabstop = 2
@@ -15,17 +19,21 @@ vim.opt.clipboard:append{'unnamedplus'}
 vim.o.winblend = 10
 vim.o.pumblend = 10
 
+vim.o.shell = 'fish'
 
 -- Keymaps
 
 vim.g.mapleader = ' '
+
 vim.keymap.set('i', 'jj', '<ESC>')
-vim.keymap.set('n', '<Leader>f', ':Fern . -reveal=%<CR>')
 
 vim.keymap.set('n', '<Leader>o', '<C-o>')
 vim.keymap.set('n', '<Leader>i', '<C-i>')
-vim.keymap.set('n', '<Leader>t', ':terminal<CR>')
+
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
+
+vim.keymap.set('n', '<Leader>f', function() vim.cmd[[Fern . -reveal=%]] end)
+vim.keymap.set('n', '<Leader>t', utils.open_term)
 
 
 -- Commands
@@ -48,16 +56,8 @@ command(
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
--- Disable line number on fern and terminal
--- Enter insert mode on terminal
-autocmd('TermOpen', {
-  group = augroup('lua', { clear = true }),
-  callback = function()
-    vim.cmd('startinsert')
-    vim.opt_local.number = false
-  end
-})
 
+-- Disable line number on fern
 autocmd("FileType", {
   group = augroup('fern', { clear = true }),
   pattern = "fern",
@@ -81,7 +81,7 @@ autocmd("VimEnter", {
       and
         vim.regex([[^[-gmnq]\=vim\=x\=\%[\.exe]$]]):match_str(vim.v.progname) ~= nil
       and
-        not(require('utils').packer_bootstrap())
+        not(utils.packer_bootstrap())
     then
       vim.cmd.Fern('.')
     end
