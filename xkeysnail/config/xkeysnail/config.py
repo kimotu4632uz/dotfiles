@@ -18,3 +18,6 @@ define_keymap(re.compile('Alacritty'), {
     K('esc'): [K('muhenkan'), K('esc')]
 }, "Esc and IME off")
 
+define_keymap(re.compile('obsidian'), {
+    K('esc'): [K('muhenkan'), K('esc')]
+}, "Esc and IME off")
