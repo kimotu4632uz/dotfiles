@@ -3,12 +3,13 @@ Description=xkeysnail
 
 [Service]
 KillMode=process
-ExecStart=/usr/bin/xkeysnail /home/kimotu/.config/xkeysnail/config.py
+ExecStartPre=/usr/bin/xhost +SI:localuser:root
+ExecStart=/usr/bin/xkeysnail --watch /home/kimotu/.config/xkeysnail/config.py
 Type=simple
 Restart=always
 RestartSec=10s
 
-Environment=DISPLAY=:0
+Environment=DISPLAY=:1
 
 [Install]
 WantedBy=default.target
