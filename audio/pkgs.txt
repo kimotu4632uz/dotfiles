@@ -3,12 +3,6 @@ pipewire-alsa
 pipewire-pulse
 wireplumber
 
-mpd
-mpdris2
-ncmpcpp
-mpc
-ueberzug
-
 # for encode.sh
 abcde
 cdparanoia
