@@ -13,8 +13,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
-  use 'kyazdani42/nvim-web-devicons'
-
   use {
     'nvim-lualine/lualine.nvim',
     config = [[require('config.lualine')]],
@@ -32,6 +30,21 @@ return require('packer').startup(function()
     end,
   }
 
+  use {
+    'akinsho/bufferline.nvim',
+    tag = "*",
+    requires = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      require("bufferline").setup {}
+      vim.keymap.set('n', '<S-l>', function() vim.cmd[[BufferLineCycleNext]] end)
+      vim.keymap.set('n', '<S-h>', function() vim.cmd[[BufferLineCyclePrev]] end)
+      vim.keymap.set('n', '<leader>wh', function() vim.cmd[[BufferLineMoveNext]] end)
+      vim.keymap.set('n', '<leader>wl', function() vim.cmd[[BufferLineMovePrev]] end)
+      vim.keymap.set('n', '<leader>wp', function() vim.cmd[[BufferLinePick]] end)
+      vim.keymap.set('n', '<leader>wc', function() vim.cmd[[BufferLinePickClose]] end)
+      vim.keymap.set('n', '<leader>wa', function() vim.cmd[[BufferLineCloseOthers]] end)
+    end,
+  }
 
   use 'RRethy/nvim-base16'
   use {

@@ -10,6 +10,7 @@ vim.o.shiftwidth = 2
 vim.o.expandtab = true
 vim.o.number = true
 vim.o.guicursor = 'a:ver10-blinkon100'
+vim.opt.termguicolors = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
