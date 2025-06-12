@@ -1,9 +1,0 @@
-{
-    "include": [
-        "default"
-    ],
-    "define": {
-        "keymap": {
-        }
-    }
-}

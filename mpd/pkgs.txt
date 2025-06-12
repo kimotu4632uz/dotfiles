@@ -1,5 +1,0 @@
-mpd
-mpdris2
-ncmpcpp
-mpc
-ueberzug

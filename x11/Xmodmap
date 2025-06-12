@@ -1,5 +1,0 @@
-remove lock = Caps_Lock
-
-keycode  66 = Return NoSymbol Return
-keycode  36 =
-keycode  49 =

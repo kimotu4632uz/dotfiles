@@ -1,7 +1,0 @@
-neovim
-
-# for X11 clipboard
-xclip
-
-# for wayland clipboard
-#wl-clipboard

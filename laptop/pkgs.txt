@@ -1,5 +1,0 @@
-libinput-gestures
-xdotool
-
-# battery
-tlp

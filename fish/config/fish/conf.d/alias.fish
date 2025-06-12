@@ -7,7 +7,6 @@ abbr -a dfu diff -up
 abbr -a dfd diff -uprN
 
 abbr -a vi vim
-abbr -a ni nvim
 
 abbr -a gst git status
 abbr -a ga git add

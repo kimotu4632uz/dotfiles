@@ -1,4 +1,0 @@
-rclone
-
-# for rclone mount
-fuse2fs

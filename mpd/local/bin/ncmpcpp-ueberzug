@@ -1,4 +1,0 @@
-#!/bin/sh
-
-alacritty --class ncmpcpp-ueberzug --config-file ~/.config/alacritty/alacritty_light.yml -e ~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-ueberzug
-
