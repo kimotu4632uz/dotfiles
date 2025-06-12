@@ -6,8 +6,6 @@ set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx XDG_CACHE_HOME $HOME/.cache
 set -gx XDG_DATA_HOME $HOME/.local/share
 
-set -gx MAKEFLAGS -j(math (grep cpu.cores /proc/cpuinfo | sort -u | sed 's/[^0-9]//g') + 1)
-
 set -gx LESS -R -S -N -x4 -i -M
 
 set -gx LESS_TERMCAP_mb (printf '\033[01;31m')      # Begins blinking.
@@ -23,12 +21,6 @@ set -gx LS_COLORS 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40
 set -gx PATH ~/.local/bin $PATH
 
 set -gx fish_greeting ""
-
-set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-
-if type cmd.exe &> /dev/null
-  set -gx PASSWORD_STORE_DIR /mnt/c/Users/$USER/.password-store
-end
 
 set -gx GHQ_SELECTOR_OPTS --cycle --layout=reverse --border --height=90%
 

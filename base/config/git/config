@@ -1,10 +1,12 @@
 [user]
 	email = 32472396+kimotu4632uz@users.noreply.github.com
 	name = kimotu4632uz
-	signingkey = 469F6B032CFFEFBA
-[commit]
-	gpgsign = true
 [init]
 	defaultBranch = main
 [ghq]
 	root = ~/src
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
